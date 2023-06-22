@@ -110,7 +110,7 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     const getData = async () => {
-      await axios.get(`http://103.163.110.11:3031/schools`)
+      await axios.get(`https://103.163.110.11:3031/schools`)
         .then((response) => {
           let bucket = ``;
           let schools = response.data;
@@ -161,7 +161,7 @@
       let jumlahprodukform = document.getElementById('jumlah_siswa').value;
       let text = "Betul data akan diubah ?"
       if (confirm(text) == true) {
-        await axios.patch(`http://103.163.110.11:3031/schools/${id}`, {
+        await axios.patch(`https://103.163.110.11:3031/schools/${id}`, {
           nama_sekolah: namasekolahform,
           kepala_sekolah: kepalasekolahform,
           akreditasi: akreditasiform,
@@ -190,7 +190,7 @@
       let akreditasiform = document.getElementById('akreditasi').value;
       let tahun_berdiriform = document.getElementById('tahun_berdiri').value;
       let jumlahprodukform = document.getElementById('jumlah_siswa').value;
-      await axios.post(`http://103.163.110.11:3031/schools`, {
+      await axios.post(`https://103.163.110.11:3031/schools`, {
         nama_sekolah: namasekolahform,
         kepala_sekolah: kepalasekolahform,
         akreditasi: akreditasiform,
@@ -215,7 +215,7 @@
     const deleteData = async (id) => {
       let text = "Betul data akan dihapus ?"
       if (confirm(text) == true) {
-        await axios.delete(`http://103.163.110.11:3031/schools/${id}`)
+        await axios.delete(`https://103.163.110.11:3031/schools/${id}`)
           .then((response) => {
             getData();
             alert("Data Berhasil Dihapus");
