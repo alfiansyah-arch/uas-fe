@@ -1,0 +1,232 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>UAS FE Alfiansyah MI21A</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <div class="login-root">
+    <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
+      <div class="loginbackground box-background--white padding-top--64">
+        <div class="loginbackground-gridContainer">
+          <div class="box-root flex-flex" style="grid-area: top / start / 8 / end;">
+            <div class="box-root"
+              style="background-image: linear-gradient(white 0%, rgb(247, 250, 252) 33%); flex-grow: 1;">
+            </div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 4 / 2 / auto / 5;">
+            <div class="box-root box-divider--light-all-2 animationLeftRight tans3s" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 6 / start / auto / 2;">
+            <div class="box-root box-background--blue800" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 7 / start / auto / 4;">
+            <div class="box-root box-background--blue animationLeftRight" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 8 / 4 / auto / 6;">
+            <div class="box-root box-background--gray100 animationLeftRight tans3s" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 2 / 15 / auto / end;">
+            <div class="box-root box-background--cyan200 animationRightLeft tans4s" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 3 / 14 / auto / end;">
+            <div class="box-root box-background--blue animationRightLeft" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 4 / 17 / auto / 20;">
+            <div class="box-root box-background--gray100 animationRightLeft tans4s" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 5 / 14 / auto / 17;">
+            <div class="box-root box-divider--light-all-2 animationRightLeft tans3s" style="flex-grow: 1;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
+        <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
+          <h1><a href="http://blog.stackfindover.com/" rel="dofollow">Formulir Pendataan Sekolah</a></h1>
+        </div>
+        <div class="formbg-outer">
+          <div class="formbg">
+            <div class="formbg-inner padding-horizontal--48">
+              <div id="stripe-login">
+                <div class="field padding-bottom--24">
+                  <label for="nama_sekolah">Nama Sekolah</label>
+                  <input type="text" name="nama_sekolah" id="nama_sekolah" placeholder="Nama Sekolah">
+                </div>
+                <div class="field padding-bottom--24">
+                  <label for="kepala_sekolah">Kepala Sekolah</label>
+                  <input type="text" name="kepala_sekolah" id="kepala_sekolah" placeholder="Kepala Sekolah">
+                </div>
+                <div class="field padding-bottom--24">
+                  <label for="akreditasi">Akreditasi Sekolah</label>
+                  <select name="akreditasi" id="akreditasi">
+                    <option value="">-- Pilih --</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                  </select>
+                </div>
+                <div class="field padding-bottom--24">
+                  <label for="tahun_beridiri">Tahun Berdiri Sekolah</label>
+                  <input type="number" name="tahun_beridiri" id="tahun_berdiri" placeholder="cth : 2010">
+                </div>
+                <div class="field padding-bottom--24">
+                  <label for="jumlah_siswa">Jumlah Siswa</label>
+                  <input type="number" name="jumlah_siswa" id="jumlah_siswa" placeholder="cth : 500">
+                </div>
+                <div class="field padding-bottom--24">
+                  <button class="btn-submit" type="submit" id="btn_submit" onclick="saveData()">Simpan !</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-link padding-top--24">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Sekolah</th>
+                  <th>Kepala Sekolah</th>
+                  <th>Akreditasi</th>
+                  <th>Tahun Berdiri</th>
+                  <th>Jumlah Siswa</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="result"></tbody>
+            </table>
+            <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
+              <span><a href="#">©Politeknik LP3I Kampus Tasikmalaya</a></span>
+              <span><a href="#">Contact</a></span>
+              <span><a href="https://instagram.com/n.alfiansyah_">n.alfiansyah_</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const getData = async () => {
+      await axios.get(`http://103.163.110.11:3031/schools`)
+        .then((response) => {
+          let bucket = ``;
+          let schools = response.data;
+          for (let i = 0; i < schools.length; i++) {
+            bucket += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${schools[i].nama_sekolah}</td>
+                        <td>${schools[i].kepala_sekolah}</td>
+                        <td>${schools[i].akreditasi}</td>
+                        <td>${schools[i].tahun_berdiri}</td>
+                        <td>${schools[i].jumlah_siswa}</td>
+                        <td><button class="btn-edit" id="btn_edit" onclick="editData('${schools[i].id}','${schools[i].nama_sekolah}','${schools[i].kepala_sekolah}',
+                            '${schools[i].akreditasi}','${schools[i].tahun_berdiri}','${schools[i].jumlah_siswa}')">Edit</button>
+                            <button class="btn-hapus" id="btn_hapus" onclick="deleteData('${schools[i].id}')">Delete</button></td>
+                    </tr>
+                    `
+          }
+          document.getElementById('result').innerHTML = bucket;
+        })
+        .catch((error) => {
+          console.log(error.message);
+          let bucket = `
+                <tr>
+                    <td colspan="4">${error.message}</td>
+                </tr>
+                `;
+          document.getElementById('result').innerHTML = bucket;
+        });
+    }
+    getData();
+
+    const editData = (id, nama_sekolah, kepala_sekolah, akreditasi, tahun_berdiri, jumlah_siswa) => {
+      document.getElementById('nama_sekolah').value = nama_sekolah;
+      document.getElementById('kepala_sekolah').value = kepala_sekolah;
+      document.getElementById('akreditasi').value = akreditasi;
+      document.getElementById('tahun_berdiri').value = tahun_berdiri;
+      document.getElementById('jumlah_siswa').value = jumlah_siswa;
+      document.getElementById('btn_submit').innerText = 'Ubah';
+      document.getElementById('btn_submit').setAttribute('onclick', `updateData(${id})`);
+    }
+
+    const updateData = async (id) => {
+      let namasekolahform = document.getElementById('nama_sekolah').value;
+      let kepalasekolahform = document.getElementById('kepala_sekolah').value;
+      let akreditasiform = document.getElementById('akreditasi').value;
+      let tahun_berdiriform = document.getElementById('tahun_berdiri').value;
+      let jumlahprodukform = document.getElementById('jumlah_siswa').value;
+      let text = "Betul data akan diubah ?"
+      if (confirm(text) == true) {
+        await axios.patch(`http://103.163.110.11:3031/schools/${id}`, {
+          nama_sekolah: namasekolahform,
+          kepala_sekolah: kepalasekolahform,
+          akreditasi: akreditasiform,
+          tahun_berdiri: tahun_berdiriform,
+          jumlah_siswa: jumlahprodukform
+        })
+          .then((response) => {
+            getData();
+            alert("Data Berhasil Diubah");
+            document.getElementById('nama_sekolah').value = '';
+            document.getElementById('kepala_sekolah').value = '';
+            document.getElementById('akreditasi').value = '';
+            document.getElementById('tahun_berdiri').value = '';
+            document.getElementById('jumlah_siswa').value = '';
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
+    }
+
+    const saveData = async () => {
+      let namasekolahform = document.getElementById('nama_sekolah').value;
+      let kepalasekolahform = document.getElementById('kepala_sekolah').value;
+      let akreditasiform = document.getElementById('akreditasi').value;
+      let tahun_berdiriform = document.getElementById('tahun_berdiri').value;
+      let jumlahprodukform = document.getElementById('jumlah_siswa').value;
+      await axios.post(`http://103.163.110.11:3031/schools`, {
+        nama_sekolah: namasekolahform,
+        kepala_sekolah: kepalasekolahform,
+        akreditasi: akreditasiform,
+        tahun_berdiri: tahun_berdiriform,
+        jumlah_siswa: jumlahprodukform
+      })
+        .then((response) => {
+          getData();
+          alert("Data berhasil ditambahkan");
+          document.getElementById('nama_sekolah').value = '';
+          document.getElementById('kepala_sekolah').value = '';
+          document.getElementById('akreditasi').value = '';
+          document.getElementById('tahun_berdiri').value = '';
+          document.getElementById('jumlah_siswa').value = '';
+          console.log('Berhasil Ditambahkan');
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
+
+    const deleteData = async (id) => {
+      let text = "Betul data akan dihapus ?"
+      if (confirm(text) == true) {
+        await axios.delete(`http://103.163.110.11:3031/schools/${id}`)
+          .then((response) => {
+            getData();
+            alert("Data Berhasil Dihapus");
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          })
+      }
+    }
+  </script>
+</body>
+
+</html>
